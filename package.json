@@ -68,7 +68,7 @@
     "rsn:verbose": "ts-node rsn/rsn-verbose.ts",
     "rsn:update": "ts-node rsn/rsn-update.ts",
     "vagrant": "cd vagrant && vagrant up",
-    "sonar": "node sonar-project.js"
+    "SAST_Scanner": "node sonar-project.js"
   },
   "jest": {
     "preset": "ts-jest",
