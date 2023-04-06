@@ -8,11 +8,9 @@ node {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
-  stage('Check-Git-Secrets') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner"
-    }
+  stage('Git Secrets') {
+    // Run Trufflehog
+    sh ' trufflehog https://github.com/MegCyber/juice-shop.git --json'
   }
   stage('Check Dependencies') {
                 // Install trivy
