@@ -2,15 +2,16 @@ node {
   stage('SCM') {
     checkout scm
   }
+   stage('Build Juice Shop') {
+       sh "npm install"
+    }
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
-  stage('Build Juice Shop') {
-       sh "npm install"
-    }
+ 
  
 
   //stage('Git Secrets') {
