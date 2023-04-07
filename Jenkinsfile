@@ -8,10 +8,18 @@ node {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
-  stage('Build') {
-    sh 'npm install'
-    sh 'npm run build'
+  stage('Build Juice Shop') {
+  steps {
+    // Set up Node.js environment
+    node {
+      // Install dependencies
+      sh "npm install"
+
+      // Build the application
+      sh "npm run build"
+    }
   }
+}
  
 
   //stage('Git Secrets') {
