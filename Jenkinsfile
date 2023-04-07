@@ -9,17 +9,8 @@ node {
     }
   }
   stage('Build Juice Shop') {
-  steps {
-    // Set up Node.js environment
-    node {
-      // Install dependencies
-      sh "npm install"
-
-      // Build the application
-      sh "npm run build"
+       sh "npm install"
     }
-  }
-}
  
 
   //stage('Git Secrets') {
