@@ -2,21 +2,22 @@ node {
   stage('SCM') {
     checkout scm
   }
+  stage('Build') {
+    steps {
+      sh 'npm install'
+    }
+  }
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
-  stage('Build') {
-    steps {
-      sh 'npm install'
-    }
-  }
-  stage('Git Secrets') {
+
+  //stage('Git Secrets') {
     // Run Trufflehog
-    sh ' trufflehog https://github.com/MegCyber/juice-shop.git --json'
-  }
+    //sh ' trufflehog https://github.com/MegCyber/juice-shop.git --json'
+ // }
   stage('Check Dependencies') {
                 // Install trivy
                 sh ' curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3 || true'
