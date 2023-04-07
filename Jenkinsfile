@@ -2,17 +2,18 @@ node {
   stage('SCM') {
     checkout scm
   }
-  stage('Build') {
-    steps {
-      sh 'npm install'
-    }
-  }
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
+  stage('Build') {
+    steps {
+      sh 'npm install'
+    }
+  }
+ 
 
   //stage('Git Secrets') {
     // Run Trufflehog
