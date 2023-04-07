@@ -5,7 +5,6 @@ node {
    stage('Build Juice Shop') {
     sh "npm update"
      sh "npm cache clean --force"
-    sh "npm uninstall juice-shop"
     sh "npm install"
      
     }
