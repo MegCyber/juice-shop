@@ -3,7 +3,10 @@ node {
     checkout scm
   }
    stage('Build Juice Shop') {
-       sh "npm install"
+    sh "npm update"
+     sh "npm cache clean --force"
+    sh "npm uninstall juice-shop"
+sh "npm install juice-shop"
     }
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
