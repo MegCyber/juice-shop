@@ -5,8 +5,9 @@ node {
    stage('Build Juice Shop') {
     sh "npm update"
      sh "npm cache clean --force"
-    sh "npm uninstall juice-shop"
-sh "npm install juice-shop"
+    sh "npm config set registry https://registry.npmjs.org/"
+    sh "npm install juice-shop"
+     
     }
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
