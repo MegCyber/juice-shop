@@ -8,15 +8,15 @@ node {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
+  stage('Build') {
+    steps {
+      sh 'npm install'
+    }
+  }
   stage('Git Secrets') {
     // Run Trufflehog
     sh ' trufflehog https://github.com/MegCyber/juice-shop.git --json'
   }
-   stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
   stage('Check Dependencies') {
                 // Install trivy
                 sh ' curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3 || true'
