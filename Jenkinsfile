@@ -3,9 +3,9 @@ node {
     checkout scm
   }
    stage('Build Juice Shop') {
-    sh "npm update"
+     sh 'rm -rf node_modules'
      sh "npm cache clean --force"
-    sh "npm install"
+    sh "npm ci"
      
     }
   stage('SonarQube Analysis') {
