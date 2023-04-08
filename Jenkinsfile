@@ -1,22 +1,22 @@
-node{
+node {
   stage('SCM') {
     checkout scm
   }
   
   stage('OWASP ZAP Scan') {
-    agent any
+    agent { any }
     parameters {
-      choice  choices: ["Baseline", "APIS", "Full"],
+      choice(choices: ["Baseline", "APIS", "Full"],
         description: 'Type of scan that is going to perform inside the container',
-        name: 'SCAN_TYPE'
+        name: 'SCAN_TYPE')
 
-      string defaultValue: "https://example.com",
+      string(defaultValue: "https://example.com",
         description: 'Target URL to scan',
-        name: 'TARGET'
+        name: 'TARGET')
 
-      booleanParam defaultValue: true,
+      booleanParam(defaultValue: true,
         description: 'Parameter to know if wanna generate report.',
-        name: 'GENERATE_REPORT'
+        name: 'GENERATE_REPORT')
     }
     steps {
       script {
