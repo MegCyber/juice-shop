@@ -9,19 +9,47 @@ node {
    // }
 
   
-stage('OWASP ZAP Active Scan') {
-    def zapHome = tool 'OWASP ZAP';
-    def targetUrl = "https://juice-shop.herokuapp.com/#/"
-    withEnv(['ZAP_PORT=8090']) {
-      sh "${zapHome}/zap.sh -daemon -port ${ZAP_PORT} -host 0.0.0.0"
-      sh "sleep 10"
-      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} status"
-      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} open-url ${targetUrl}"
-      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} spider ${targetUrl}"
-      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} active-scan --recursive ${targetUrl}"
-      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} report -o zap-report.html -f html"
-    }
-  }
+ stage('OWASP ZAP Scanning') {
+        agent any
+        parameters {
+            choice(choices: ['Baseline', 'APIS', 'Full'], 
+                   description: 'Type of scan that is going to perform inside the container',
+                   name: 'SCAN_TYPE')
+            booleanParam(defaultValue: true,
+                          description: 'Parameter to know if wanna generate report.',
+                          name: 'GENERATE_REPORT')
+        }
+        steps {
+            script {
+                def zapContainer = docker.image('owasp/zap2docker-stable').run('-dt')
+                def zapContainerId = zapContainer.id
+                try {
+                    sh "sleep 30" // Give some time for the container to start up
+
+                    def target = 'https://juice-shop.herokuapp.com/#/'
+                    def scanType = "${params.SCAN_TYPE}"
+
+                    sh "docker exec $zapContainerId zap.sh -cmd -quickurl $target"
+
+                    if (scanType == 'Baseline') {
+                        sh "docker exec $zapContainerId zap-baseline.py -t $target"
+                    } else if (scanType == 'APIS') {
+                        sh "docker exec $zapContainerId zap-api-scan.py -t $target"
+                    } else if (scanType == 'Full') {
+                        sh "docker exec $zapContainerId zap-full-scan.py -t $target"
+                    } else {
+                        echo 'Invalid scan type specified'
+                        return
+                    }
+
+                    if (params.GENERATE_REPORT) {
+                        sh "docker exec $zapContainerId cp /zap/wrk/*.html /zap/wrk/report.html"
+                        sh "docker cp $zapContainerId:/zap/wrk/report.html ${WORKSPACE}/zap-report.html"
+                    }
+                } finally {
+                    sh "docker stop $zapContainerId"
+                    sh "docker rm $zapContainerId"
+                }
   
     stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
