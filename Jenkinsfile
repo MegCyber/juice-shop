@@ -7,12 +7,7 @@ node {
   //  sh "npm install"
      
    // }
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner"
-    }
-  }
+
   
 stage('OWASP ZAP Active Scan') {
     def zapHome = tool 'OWASP ZAP';
@@ -25,6 +20,13 @@ stage('OWASP ZAP Active Scan') {
       sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} spider ${targetUrl}"
       sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} active-scan --recursive ${targetUrl}"
       sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} report -o zap-report.html -f html"
+    }
+  }
+  
+    stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarScanner';
+    withSonarQubeEnv() {
+      sh "${scannerHome}/bin/sonar-scanner"
     }
   }
  
