@@ -8,8 +8,7 @@ node {
      
    // }
 
-  
- stage('OWASP ZAP Scanning') {
+   stage('OWASP ZAP Scanning') {
         agent any
         parameters {
             choice(choices: ['Baseline', 'APIS', 'Full'], 
@@ -50,6 +49,9 @@ node {
                     sh "docker stop $zapContainerId"
                     sh "docker rm $zapContainerId"
                 }
+            }
+        }
+    }
   
     stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
