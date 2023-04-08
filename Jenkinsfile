@@ -13,7 +13,20 @@ node {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
- 
+  
+stage('OWASP ZAP Active Scan') {
+    def zapHome = tool 'OWASP ZAP';
+    def targetUrl = "https://juice-shop.herokuapp.com/#/"
+    withEnv(['ZAP_PORT=8090']) {
+      sh "${zapHome}/zap.sh -daemon -port ${ZAP_PORT} -host 0.0.0.0"
+      sh "sleep 10"
+      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} status"
+      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} open-url ${targetUrl}"
+      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} spider ${targetUrl}"
+      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} active-scan --recursive ${targetUrl}"
+      sh "${zapHome}/zap-cli.py -p ${ZAP_PORT} report -o zap-report.html -f html"
+    }
+  }
  
 
   //stage('Git Secrets') {
