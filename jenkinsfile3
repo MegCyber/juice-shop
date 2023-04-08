@@ -17,6 +17,11 @@ node{
   stage('SCM') {
     checkout scm
   }
+  
+ 
+  
+  
+  
  //  stage('Build Juice Shop') {
   //   sh 'rm -rf node_modules'
   //  sh "npm install"
@@ -26,7 +31,35 @@ node{
    
    
    
-   
+   stage('Pipeline Info') {
+                 steps {
+                     script {
+                         echo "<--Parameter Initialization-->"
+                         echo """
+                         The current parameters are:
+                             Scan Type: ${params.SCAN_TYPE}
+                             Target: ${params.TARGET}
+                             Generate report: ${params.GENERATE_REPORT}
+                         """
+                     }
+                 }
+         }
+ 
+         stage('Setting up OWASP ZAP docker container') {
+             steps {
+                 script {
+                         echo "Pulling up last OWASP ZAP container --> Start"
+                         sh 'docker pull owasp/zap2docker-stable'
+                         echo "Pulling up last VMS container --> End"
+                         echo "Starting container --> Start"
+                         sh """
+                         docker run -dt --name owasp \
+                         owasp/zap2docker-stable \
+                         /bin/bash
+                         """
+                 }
+             }
+         }
    
    
    
