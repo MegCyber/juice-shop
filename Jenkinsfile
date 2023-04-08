@@ -3,7 +3,7 @@ node {
     checkout scm
   }
    stage('Build Juice Shop') {
-     sh 'rm -rf node_modules && rm package-lock.json'
+     sh 'rm -rf node_modules'
     sh "npm install"
      
     }
