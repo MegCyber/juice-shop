@@ -1,22 +1,11 @@
 node{
-  stage('SCM') {
+	stage('SCM') {
     checkout scm
   }
- //  stage('Build Juice Shop') {
-  //   sh 'rm -rf node_modules'
-  //  sh "npm install"
-     
-   // }
-  stage('DAST Analysis') {
-	   steps {
-		    script {
-                // Run ZAP
-                sh 'sudo docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \ -t https://aopartnersdev.com.ng/devsecops/ -g gen.conf -r testreport.html'
-	   }
-	   }
+stage('DAST Analysis') {
+	sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \ -t https://aopartnersdev.com.ng/devsecops/ -g gen.conf -r testreport.html'	   
   }
-  
-    stage('SonarQube Analysis') {
+stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
@@ -28,33 +17,6 @@ node{
     // Run Trufflehog
     //sh ' trufflehog https://github.com/MegCyber/juice-shop.git --json'
  // }
-  stage('Check Dependencies') {
-                // Install trivy
-                sh ' curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3 || true'
-                sh ' curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl || true'
-
-                // Scan all vuln levels
-                sh ' mkdir -p reports'
-                sh ' trivy filesystem --ignore-unfixed --vuln-type os,library --format template --template "@html.tpl" -o reports/nodjs-scan.html ./nodejs || true'
-                publishHTML target : [
-                    allowMissing: true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'reports',
-                    reportFiles: 'nodjs-scan.html',
-                    reportName: 'Trivy Scan',
-                    reportTitles: 'Trivy Scan'
-                ]
-
-                // Scan again and fail on CRITICAL vulns
-                sh 'trivy filesystem --ignore-unfixed --vuln-type os,library --exit-code 1 --severity CRITICAL ./nodejs || true'
-
-            }
-  
-  stage ('DAST Analysis') {
-      sshagent(['zap']) {
-         sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t https://aopartnersdev.com.ng/devsecops/ || true '
-      }
-    }
+ 
 
 }
