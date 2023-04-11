@@ -2,6 +2,12 @@ node {
   stage('SCM') { 
     checkout scm
   }
+  
+     stage('Run functional tests') {
+        withEnv(['JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64']) {
+          sh 'mvn clean test'
+      }
+
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
