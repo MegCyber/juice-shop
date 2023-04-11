@@ -5,6 +5,7 @@ node {
   
      stage('Run functional tests') {
         withEnv(['JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64']) {
+          sh 'mvn -f juice-shop/FunctionalSecurityTest-master/pom.xml clean package'
           sh 'mvn clean test'
       }
      }
