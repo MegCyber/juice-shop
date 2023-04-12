@@ -1,440 +1,329 @@
-# DAMN VULNERABLE WEB APPLICATION
+# ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) OWASP Juice Shop
 
-Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goal is to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and to aid both students & teachers to learn about web application security in a controlled class room environment.
+[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://owasp.org/projects/#sec-flagships)
+[![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
+[![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
+[![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
 
-The aim of DVWA is to **practice some of the most common web vulnerabilities**, with **various levels of difficulty**, with a simple straightforward interface.
-Please note, there are **both documented and undocumented vulnerabilities** with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
-- - -
+![CI/CD Pipeline](https://github.com/juice-shop/juice-shop/workflows/CI/CD%20Pipeline/badge.svg?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6206c8f3972bcc97a033/test_coverage)](https://codeclimate.com/github/juice-shop/juice-shop/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6206c8f3972bcc97a033/maintainability)](https://codeclimate.com/github/juice-shop/juice-shop/maintainability)
+[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/juice-shop/juice-shop)](https://codeclimate.com/github/juice-shop/juice-shop/trends/technical_debt)
+[![Cypress tests](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/3hrkhu/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/3hrkhu/runs)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/223/badge)](https://bestpractices.coreinfrastructure.org/projects/223)
+![GitHub stars](https://img.shields.io/github/stars/juice-shop/juice-shop.svg?label=GitHub%20%E2%98%85&style=flat)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
-## WARNING!
+> [The most trustworthy online shop out there.](https://twitter.com/dschadow/status/706781693504589824)
+> ([@dschadow](https://github.com/dschadow)) —
+> [The best juice shop on the whole internet!](https://twitter.com/shehackspurple/status/907335357775085568)
+> ([@shehackspurple](https://twitter.com/shehackspurple)) —
+> [Actually the most bug-free vulnerable application in existence!](https://youtu.be/TXAztSpYpvE?t=26m35s)
+> ([@vanderaj](https://twitter.com/vanderaj)) —
+> [First you 😂😂then you 😢](https://twitter.com/kramse/status/1073168529405472768)
+> ([@kramse](https://twitter.com/kramse)) —
+> [But this doesn't have anything to do with juice.](https://twitter.com/coderPatros/status/1199268774626488320)
+> ([@coderPatros' wife](https://twitter.com/coderPatros))
 
-Damn Vulnerable Web Application is damn vulnerable! **Do not upload it to your hosting provider's public html folder or any Internet facing servers**, as they will be compromised. It is recommended using a virtual machine (such as [VirtualBox](https://www.virtualbox.org/) or [VMware](https://www.vmware.com/)), which is set to NAT networking mode. Inside a guest machine, you can download and install [XAMPP](https://www.apachefriends.org/) for the web server and database.
+OWASP Juice Shop is probably the most modern and sophisticated insecure web application! It can be used in security
+trainings, awareness demos, CTFs and as a guinea pig for security tools! Juice Shop encompasses vulnerabilities from the
+entire
+[OWASP Top Ten](https://owasp.org/www-project-top-ten) along with many other security flaws found in real-world
+applications!
 
-### Disclaimer
+![Juice Shop Screenshot Slideshow](screenshots/slideshow.gif)
 
-We do not take responsibility for the way in which any one uses this application (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA, it is not our responsibility, it is the responsibility of the person/s who uploaded and installed it.
+For a detailed introduction, full list of features and architecture overview please visit the official project page:
+<https://owasp-juice.shop>
 
-- - -
+## Table of contents
 
-## License
+- [Setup](#setup)
+    - [From Sources](#from-sources)
+    - [Packaged Distributions](#packaged-distributions)
+    - [Docker Container](#docker-container)
+    - [Vagrant](#vagrant)
+    - [Amazon EC2 Instance](#amazon-ec2-instance)
+    - [Azure Container Instance](#azure-container-instance)
+    - [Google Compute Engine Instance](#google-compute-engine-instance)
+    - [Heroku](#heroku)
+    - [Gitpod](#gitpod)
+- [Demo](#demo)
+- [Documentation](#documentation)
+    - [Node.js version compatibility](#nodejs-version-compatibility)
+    - [Troubleshooting](#troubleshooting)
+    - [Official companion guide](#official-companion-guide)
+- [Contributing](#contributing)
+- [References](#references)
+- [Merchandise](#merchandise)
+- [Donations](#donations)
+- [Contributors](#contributors)
+- [Licensing](#licensing)
 
-This file is part of Damn Vulnerable Web Application (DVWA).
+## Setup
 
-Damn Vulnerable Web Application (DVWA) is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+> You can find some less common installation variations in
+> [the _Running OWASP Juice Shop_ documentation](https://pwning.owasp-juice.shop/part1/running.html).
 
-Damn Vulnerable Web Application (DVWA) is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+### From Sources
 
-You should have received a copy of the GNU General Public License
-along with Damn Vulnerable Web Application (DVWA).  If not, see <https://www.gnu.org/licenses/>.
+![GitHub repo size](https://img.shields.io/github/repo-size/juice-shop/juice-shop.svg)
 
-- - -
+1. Install [node.js](#nodejs-version-compatibility)
+2. Run `git clone https://github.com/juice-shop/juice-shop.git --depth 1` (or
+   clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
+   of the repository)
+3. Go into the cloned folder with `cd juice-shop`
+4. Run `npm install` (only has to be done before first start or when you change the source code)
+5. Run `npm start`
+6. Browse to <http://localhost:3000>
 
-## Internationalisation
+### Packaged Distributions
 
-This file is available in multiple languages:
-- Arabic: [العربية](README.ar.md)
-- Chinese: [简体中文](README.zh.md)
-- French: [Français](README.fr.md)
-- Persian: [فارسی](README.fa.md)
-- Spanish: [Español](README.es.md)
-- Turkish: [Türkçe](README.tr.md)
+[![GitHub release](https://img.shields.io/github/downloads/juice-shop/juice-shop/total.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
+[![SourceForge](https://img.shields.io/sourceforge/dm/juice-shop?label=sourceforge%20downloads)](https://sourceforge.net/projects/juice-shop/)
+[![SourceForge](https://img.shields.io/sourceforge/dt/juice-shop?label=sourceforge%20downloads)](https://sourceforge.net/projects/juice-shop/)
 
-If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected. Submit your translated version by adding a new 'README.xx.md' file where xx is the two-letter code of your desired language (based on [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
+1. Install a 64bit [node.js](#nodejs-version-compatibility) on your Windows, MacOS or Linux machine
+2. Download `juice-shop-<version>_<node-version>_<os>_x64.zip` (or
+   `.tgz`) attached to
+   [latest release](https://github.com/juice-shop/juice-shop/releases/latest)
+3. Unpack and `cd` into the unpacked folder
+4. Run `npm start`
+5. Browse to <http://localhost:3000>
 
-- - -
+> Each packaged distribution includes some binaries for `sqlite3` and
+> `libxmljs` bound to the OS and node.js version which `npm install` was
+> executed on.
 
-## Download
+### Docker Container
 
-While there are various versions of DVWA around, the only supported version is the latest source from the official GitHub repository. You can either clone it from the repo:
+[![Docker Pulls](https://img.shields.io/docker/pulls/bkimminich/juice-shop.svg)](https://hub.docker.com/r/bkimminich/juice-shop)
+![Docker Stars](https://img.shields.io/docker/stars/bkimminich/juice-shop.svg)
+[![](https://images.microbadger.com/badges/image/bkimminich/juice-shop.svg)](https://microbadger.com/images/bkimminich/juice-shop
+"Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/bkimminich/juice-shop.svg)](https://microbadger.com/images/bkimminich/juice-shop
+"Get your own version badge on microbadger.com")
+
+1. Install [Docker](https://www.docker.com)
+2. Run `docker pull bkimminich/juice-shop`
+3. Run `docker run --rm -p 3000:3000 bkimminich/juice-shop`
+4. Browse to <http://localhost:3000> (on macOS and Windows browse to
+   <http://192.168.99.100:3000> if you are using docker-machine instead of the native docker installation)
+
+### Vagrant
+
+1. Install [Vagrant](https://www.vagrantup.com/downloads.html) and
+   [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+2. Run `git clone https://github.com/juice-shop/juice-shop.git` (or
+   clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
+   of the repository)
+3. Run `cd vagrant && vagrant up`
+4. Browse to [192.168.56.110](http://192.168.56.110)
+
+### Amazon EC2 Instance
+
+1. In the _EC2_ sidenav select _Instances_ and click _Launch Instance_
+2. In _Step 1: Choose an Amazon Machine Image (AMI)_ choose an _Amazon Linux AMI_ or _Amazon Linux 2 AMI_
+3. In _Step 3: Configure Instance Details_ unfold _Advanced Details_ and copy the script below into _User Data_
+4. In _Step 6: Configure Security Group_ add a _Rule_ that opens port 80 for HTTP
+5. Launch your instance
+6. Browse to your instance's public DNS
 
 ```
-git clone https://github.com/digininja/DVWA.git
+#!/bin/bash
+yum update -y
+yum install -y docker
+service docker start
+docker pull bkimminich/juice-shop
+docker run -d -p 80:3000 bkimminich/juice-shop
 ```
 
-Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/master.zip).
+### Azure Container Instance
 
-- - -
+1. Open and login (via `az login`) to your
+   [Azure CLI](https://azure.github.io/projects/clis/) **or** login to the [Azure Portal](https://portal.azure.com),
+   open the _CloudShell_
+   and then choose _Bash_ (not PowerShell).
+2. Create a resource group by running `az group create --name <group name> --location <location name, e.g. "centralus">`
+3. Create a new container by
+   running `az container create --resource-group <group name> --name <container name> --image bkimminich/juice-shop --dns-name-label <dns name label> --ports 3000 --ip-address public`
+4. Your container will be available at `http://<dns name label>.<location name>.azurecontainer.io:3000`
 
-## Installation
+### Google Compute Engine Instance
 
-### Installation Videos
-
-- [Installing DVWA on Kali running in VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
-- [Installing DVWA on Windows using XAMPP](https://youtu.be/Yzksa_WjnY0)
-- [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo)
-
-### Windows + XAMPP
-
-The easiest way to install DVWA is to download and install [XAMPP](https://www.apachefriends.org/) if you do not already have a web server setup.
-
-XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows and Mac OS X. The package includes the Apache web server, MySQL, PHP, Perl, a FTP server and phpMyAdmin.
-
-This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation process for Windows but it should be similar for other OSs.
-
-### Config File
-
-DVWA ships with a dummy copy of its config file which you will need to copy into place and then make the appropriate changes. On Linux, assuming you are in the DVWA directory, this can be done as follows:
-
-`cp config/config.inc.php.dist config/config.inc.php`
-
-On Windows, this can be a bit harder if you are hiding file extensions, if you are unsure about this, this blog post explains more about it:
-
-[How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
-
-### Linux Packages
-
-If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
-
-- apache2
-- libapache2-mod-php
-- mariadb-server
-- mariadb-client
-- php php-mysqli
-- php-gd
-
-I would recommend doing an update before this, just so you make sure you are going to get the latest version of everything.
+1. Login to the Google Cloud Console and
+   [open Cloud Shell](https://console.cloud.google.com/home/dashboard?cloudshell=true).
+2. Launch a new GCE instance based on the juice-shop container. Take note of the `EXTERNAL_IP` provided in the output.
 
 ```
-apt update
-apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libapache2-mod-php
+gcloud compute instances create-with-container owasp-juice-shop-app --container-image bkimminich/juice-shop
 ```
 
-The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
-
-### Database Setup
-
-To set up the database, simply click on the `Setup DVWA` button in the main menu, then click on the `Create / Reset Database` button. This will create / reset the database for you with some data in.
-
-If you receive an error while trying to create your database, make sure your database credentials are correct within `./config/config.inc.php`. *This differs from config.inc.php.dist, which is an example file.*
-
-The variables are set to the following by default:
-
-```php
-$_DVWA[ 'db_server'] = '127.0.0.1';
-$_DVWA[ 'db_port'] = '3306';
-$_DVWA[ 'db_user' ] = 'dvwa';
-$_DVWA[ 'db_password' ] = 'p@ssw0rd';
-$_DVWA[ 'db_database' ] = 'dvwa';
-```
-
-Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), then you can't use the database root user, you must create a new database user. To do this, connect to the database as the root user then use the following commands:
-
-```mysql
-mysql> create database dvwa;
-Query OK, 1 row affected (0.00 sec)
-
-mysql> create user dvwa@localhost identified by 'p@ssw0rd';
-Query OK, 0 rows affected (0.01 sec)
-
-mysql> grant all on dvwa.* to dvwa@localhost;
-Query OK, 0 rows affected (0.01 sec)
-
-mysql> flush privileges;
-Query OK, 0 rows affected (0.00 sec)
-```
-
-### Disable Authentication
-
-Some tools don't work well with authentication so can't be used with DVWA. To get around this, there is a config option to disable authentication checking. To do this, simply set the following in the config file:
-
-```php
-$_DVWA[ 'disable_authentication' ] = true;
-```
-
-You will also need to set the security level to one that is appropriate to the testing you want to do:
-
-```php
-$_DVWA[ 'default_security_level' ] = 'low';
-```
-
-In this state, you can access all the features without needing to log in and set any cookies.
-
-### Other Configuration
-
-Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
-
-**Folder Permissions**:
-
-* `./hackable/uploads/` - Needs to be writeable by the web service (for File Upload).
-* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
-
-**PHP configuration**:
-* To allow  Remote File Inclusions (RFI):
-    * `allow_url_include = on` [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
-    * `allow_url_fopen = on` [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* To optionally reduce verbosity by hiding PHP warning messages:
-    * `display_errors = off` [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
-
-**File: `config/config.inc.php`**:
-
-* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - These values need to be generated from: https://www.google.com/recaptcha/admin/create
-
-### Default Credentials
-
-**Default username = `admin`**
-
-**Default password = `password`**
-
-_...can easily be brute forced ;)_
-
-Login URL: http://127.0.0.1/login.php
-
-_Note: This will be different if you installed DVWA into a different directory._
-
-- - -
-
-## Docker Container
-
-_This section of the readme was added by @thegrims, for support on Docker issues, please contact them or @opsxcq who is the maintainer of the Docker image and repo. Any issue tickets will probably be pointed at this and closed._
-
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
-
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
-
-- - -
-
-## Troubleshooting
-
-These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
-
-### I browsed to the site and got a 404
-
-If you are having this problem you need to understand file locations. By default, the Apache document root (the place it starts looking for web content) is `/var/www/html`. If you put the file `hello.txt` in this directory, to access it you would browse to `http://localhost/hello.txt`.
-
-If you created a directory and put the file in there - `/var/www/html/mydir/hello.txt` - you would then need to browse to `http://localhost/mydir/hello.txt`.
-
-Linux is by default case sensitive and so in the example above, if you tried to browse to any of these, you would get a `404 Not Found`:
-
-- `http://localhost/MyDir/hello.txt`
-- `http://localhost/mydir/Hello.txt`
-- `http://localhost/MYDIR/hello.txt`
-
-How does this affect DVWA? Most people use git to checkout DVWA into `/var/www/html`, this gives them the directory `/var/www/html/DVWA/` with all the DVWA files inside it. They then browse to `http://localhost/` and get either a `404` or the default Apache welcome page. As the files are in DVWA, you must browse to `http://localhost/DVWA`.
-
-The other common mistake is to browse to `http://localhost/dvwa` which will give a `404` because `dvwa` is not `DVWA` as far as Linux directory matching is concerned.
-
-So after setup, if you try to visit the site and get a `404`, think about where you installed the files to, where they are relative to the document root, and what the case of the directory you used is.
-
-### "Access denied" running setup
-
-If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
+3. Create a firewall rule that allows inbound traffic to port 3000
 
 ```
-Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
+gcloud compute firewall-rules create juice-rule --allow tcp:3000
 ```
 
-The error is telling you that you are using the username `notdvwa`.
+4. Your container is now running and available at
+   `http://<EXTERNAL_IP>:3000/`
 
-The following error says you have pointed the config file at the wrong database.
+### Heroku
 
-```
-SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
-```
+1. [Sign up to Heroku](https://signup.heroku.com/) and
+   [log in to your account](https://id.heroku.com/login)
+2. Click the button below and follow the instructions
 
-It is saying that you are using the user `dvwa` and trying to connect to the database `notdvwa`.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-The first thing to do is to double check what you think you put in the config file is what is actually there.
+If you have forked the Juice Shop repository on GitHub, the _Deploy to
+Heroku_ button will deploy your forked version of the application.
 
-If it matches what you expect, the next thing to do is to check you can log in as the user on the command line. Assuming you have a database user of `dvwa` and a password of `p@ssw0rd`, run the following command:
+### Gitpod 
 
-```
-mysql -u dvwa -pp@ssw0rd -D dvwa
-```
+1. Login to [gitpod.io](https://gitpod.io) and use <https://gitpod.io/#https://github.com/juice-shop/juice-shop/> to start a new workspace. If you want to spin up a forked repository, your URL needs to be adjusted accordingly.
 
-*Note: There is no space after the -p*
+2. After the Gitpod workspace is loaded, Gitpod tasks is still running to install `npm install`  and launch the website. Despite Gitpod showing your workspace state already as _Running_, you need to wait until the installation process is done, before the website becomes accessable. The _Open Preview Window (Internal Browser)_, will open automatically and refresh itself automatically when the server has started.
 
-If you see the following, the password is correct:
+3. Your Juice Shop instance is now also available at `https://3000-<GITPOD_WORKSPACE_ID>.<GITPOD_HOSTING_ZONE>.gitpod.io`.
 
-```
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 14
-Server version: 10.3.22-MariaDB-0ubuntu0.19.10.1 Ubuntu 19.10
+## Demo
 
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+Feel free to have a look at the latest version of OWASP Juice Shop:
+<http://demo.owasp-juice.shop>
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+> This is a deployment-test and sneak-peek instance only! You are __not
+> supposed__ to use this instance for your own hacking endeavours! No
+> guaranteed uptime! Guaranteed stern looks if you break it!
 
-MariaDB [dvwa]>
-```
+## Documentation
 
-As you can connect on the command line, it is likely something wrong in the config file, double check that and then raise an issue if you still can't get things working.
+### Node.js version compatibility
 
-If you see the following, the username or password you are using is wrong. Repeat the [Database Setup](#database-setup) steps and make sure you use the same username and password throughout the process.
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/bkimminich/juice-shop)
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/bkimminich/juice-shop)
 
-```
-ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
-```
+OWASP Juice Shop officially supports the following versions of
+[node.js](http://nodejs.org) in line with the official
+[node.js LTS schedule](https://github.com/nodejs/LTS) as close as possible. Docker images and packaged distributions are
+offered accordingly.
 
-If you get the following, the user credentials are correct but the user does not have access to the database. Again, repeat the setup steps and check the database name you are using.
+| node.js | Supported            | Tested             | [Packaged Distributions](#packaged-distributions) | [Docker images](#docker-container) from `master` | [Docker images](#docker-container) from `develop` |
+|:--------|:---------------------|:-------------------|:--------------------------------------------------|:-------------------------------------------------|:--------------------------------------------------|
+| 20.x    | :x:                  | :x:                |                                                   |                                                  |                                                   |
+| 19.x    | (:heavy_check_mark:) | :heavy_check_mark: |                                                   |                                                  |                                                   |
+| 18.x    | :heavy_check_mark:   | :heavy_check_mark: | Windows (`x64`), MacOS (`x64`), Linux (`x64`)     | `latest` (`linux/amd64`, `linux/arm64`)          | `snapshot` (`linux/amd64`, `linux/arm64`)         |
+| 17.x    | (:heavy_check_mark:) | :x:                |                                                   |                                                  |                                                   |
+| 16.x    | :heavy_check_mark:   | :heavy_check_mark: | Windows (`x64`), MacOS (`x64`), Linux (`x64`)     |                                                  |                                                   |
+| 15.x    | (:heavy_check_mark:) | :x:                |                                                   |                                                  |                                                   |
+| 14.x    | :heavy_check_mark:   | :heavy_check_mark: | Windows (`x64`), MacOS (`x64`), Linux (`x64`)     |                                                  | `                                                 |
+| <14.x   | :x:                  | :x:                |                                                   |                                                  |                                                   |
 
-```
-ERROR 1044 (42000): Access denied for user 'dvwa'@'localhost' to database 'dvwa'
-```
+Juice Shop is automatically tested _only on the latest `.x` minor version_ of each node.js version mentioned above!
+There is no guarantee that older minor node.js releases will always work with Juice Shop!
+Please make sure you stay up to date with your chosen version.
 
-The final error you could get is this:
+### Troubleshooting
 
-```
-ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
-```
+[![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
-This is not an authentication issue but tells you that the database server is not running. Start it with the following
+If you need help with the application setup please check our
+[our existing _Troubleshooting_](https://pwning.owasp-juice.shop/appendix/troubleshooting.html)
+guide. If this does not solve your issue please post your specific problem or question in the
+[Gitter Chat](https://gitter.im/bkimminich/juice-shop) where community members can best try to help you.
 
-```sh
-sudo service mysql start
-```
+:stop_sign: **Please avoid opening GitHub issues for support requests or questions!**
 
-### Unknown authentication method
+### Official companion guide
 
-With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
+[![Write Goodreads Review](https://img.shields.io/badge/goodreads-write%20review-49557240.svg)](https://www.goodreads.com/review/edit/49557240)
 
-```
-Database Error #2054: The server requested authentication method unknown to the client.
-```
+OWASP Juice Shop comes with an official companion guide eBook. It will give you a complete overview of all
+vulnerabilities found in the application including hints how to spot and exploit them. In the appendix you will even
+find complete step-by-step solutions to every challenge. Extensive documentation of
+[custom re-branding](https://pwning.owasp-juice.shop/part1/customization.html),
+[CTF-support](https://pwning.owasp-juice.shop/part1/ctf.html),
+[trainer's guide](https://pwning.owasp-juice.shop/appendix/trainers.html)
+and much more is also included.
 
-You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the official guide from the MariaDB project:
+[Pwning OWASP Juice Shop](https://leanpub.com/juice-shop) is published under
+[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+and is available **for free** in PDF, Kindle and ePub format on LeanPub. You can also
+[browse the full content online](https://pwning.owasp-juice.shop)!
 
-<https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
+[![Pwning OWASP Juice Shop Cover](https://raw.githubusercontent.com/bkimminich/pwning-juice-shop/master/cover_small.jpg)](https://leanpub.com/juice-shop)
 
-Alternatively, follow these steps:
+## Contributing
 
-1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
-1. Under the line `[mysqld]`, add the following:
-  `default-authentication-plugin=mysql_native_password`
-1. Restart the database: `sudo service mysql restart`
-1. Check the authentication method for your database user:
+[![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop.svg)](https://github.com/bkimminich/juice-shop/graphs/contributors)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/owasp-juice-shop/localized.svg)](https://crowdin.com/project/owasp-juice-shop)
+![GitHub issues by-label](https://img.shields.io/github/issues/bkimminich/juice-shop/help%20wanted.svg)
+![GitHub issues by-label](https://img.shields.io/github/issues/bkimminich/juice-shop/good%20first%20issue.svg)
 
-    ```sql
-    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
-    +-----------+------------------+-----------------------+
-    | Host      | User             | plugin                |
-    +-----------+------------------+-----------------------+
-    | localhost | dvwa             | caching_sha2_password |
-    +-----------+------------------+-----------------------+
-    1 rows in set (0.00 sec)
-    ```
+We are always happy to get new contributors on board! Please check
+[CONTRIBUTING.md](CONTRIBUTING.md) to learn how to
+[contribute to our codebase](CONTRIBUTING.md#code-contributions) or the
+[translation into different languages](CONTRIBUTING.md#i18n-contributions)!
 
-1. You'll likely see `caching_sha2_password`. If you do, run the following command:
+## References
 
-    ```sql
-    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
-    ```
+Did you write a blog post, magazine article or do a podcast about or mentioning OWASP Juice Shop? Or maybe you held or
+joined a conference talk or meetup session, a hacking workshop or public training where this project was mentioned?
 
-1. Re-running the check, you should now see `mysql_native_password`.
+Add it to our ever-growing list of [REFERENCES.md](REFERENCES.md) by forking and opening a Pull Request!
 
-    ```sql
-    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
-    +-----------+------+-----------------------+
-    | Host      | User | plugin                |
-    +-----------+------+-----------------------+
-    | localhost | dvwa | mysql_native_password |
-    +-----------+------+-----------------------+
-    1 row in set (0.00 sec)
-    ```
+## Merchandise
 
-After all that, the setup process should now work as normal.
+* On [Spreadshirt.com](http://shop.spreadshirt.com/juiceshop) and
+  [Spreadshirt.de](http://shop.spreadshirt.de/juiceshop) you can get some swag (Shirts, Hoodies, Mugs) with the official
+  OWASP Juice Shop logo
+* On
+  [StickerYou.com](https://www.stickeryou.com/products/owasp-juice-shop/794)
+  you can get variants of the OWASP Juice Shop logo as single stickers to decorate your laptop with. They can also print
+  magnets, iron-ons, sticker sheets and temporary tattoos.
 
-If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
+The most honorable way to get some stickers is to
+[contribute to the project](https://pwning.owasp-juice.shop/part3/contribution.html)
+by fixing an issue, finding a serious bug or submitting a good idea for a new challenge!
 
-### Database Error #2002: No such file or directory.
+We're also happy to supply you with stickers if you organize a meetup or conference talk where you use or talk about or
+hack the OWASP Juice Shop! Just
+[contact the mailing list](mailto:owasp_juice_shop_project@lists.owasp.org)
+or [the project leader](mailto:bjoern.kimminich@owasp.org) to discuss your plans!
 
-The database server is not running. In a Debian based distro this can be done with:
+## Donations
 
-```sh
-sudo service mysql start
-```
+[![](https://img.shields.io/badge/support-owasp%20juice%20shop-blue)](https://owasp.org/donate/?reponame=www-project-juice-shop&title=OWASP+Juice+Shop)
 
-### Errors "MySQL server has gone away" and "Packets out of order"
+The OWASP Foundation gratefully accepts donations via Stripe. Projects such as Juice Shop can then request reimbursement
+for expenses from the Foundation. If you'd like to express your support of the Juice Shop project, please make sure to
+tick the "Publicly list me as a supporter of OWASP Juice Shop" checkbox on the donation form. You can find our more
+about donations and how they are used here:
 
-There are a few reasons you could be getting these errors, but the most likely is the version of database server you are running is not compatible with the version of PHP.
+<https://pwning.owasp-juice.shop/part3/donations.html>
 
-This is most commonly found when you are running the latest version of MySQL as PHP and it do not get on well. Best advice, ditch MySQL and install MariaDB as this is not something we can support.
+## Contributors
 
-For more information, see:
+The OWASP Juice Shop core project team are:
 
-<https://www.ryadel.com/en/fix-mysql-server-gone-away-packets-order-similar-mysql-related-errors/>
+- [Björn Kimminich](https://github.com/bkimminich) aka `bkimminich`
+  ([Project Leader](https://www.owasp.org/index.php/Projects/Project_Leader_Responsibilities))
+  [![Keybase PGP](https://img.shields.io/keybase/pgp/bkimminich)](https://keybase.io/bkimminich)
+- [Jannik Hollenbach](https://github.com/J12934) aka `J12934`
+- [Timo Pagel](https://github.com/wurstbrot) aka `wurstbrot`
+- [Shubham Palriwala](https://github.com/ShubhamPalriwala) aka `ShubhamPalriwala`
 
-### Command Injection won't work
+For a list of all contributors to the OWASP Juice Shop please visit our
+[HALL_OF_FAME.md](HALL_OF_FAME.md).
 
-Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
+## Licensing
 
-### Why can't the database connect on CentOS?
+[![license](https://img.shields.io/github/license/bkimminich/juice-shop.svg)](LICENSE)
 
-You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the web server to talk to the database:
+This program is free software: you can redistribute it and/or modify it under the terms of the [MIT license](LICENSE).
+OWASP Juice Shop and any contributions are Copyright © by Bjoern Kimminich & the OWASP Juice Shop contributors
+2014-2023.
 
-```
-setsebool -P httpd_can_network_connect_db 1
-```
-
-### Anything Else
-
-For the latest troubleshooting information please read both open and closed tickets in the git repo:
-
-<https://github.com/digininja/DVWA/issues>
-
-Before submitting a ticket, please make sure you are running the latest version of the code from the repo. This is not the latest release, this is the latest code from the master branch.
-
-If raising a ticket, please submit at least the following information:
-
-- Operating System
-- The last 5 lines from the web server error log directly after whatever error you are reporting occurs
-- If it is a database authentication problem, go through the steps above and screenshot each step. Submit these along with a screenshot of the section of the config file showing the database user and password.
-- A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
-
-- - -
-
-## Tutorials
-
-I am going to try to put together some tutorial videos that walk through some of the vulnerabilities and show how to detect them and then how to exploit them. Here are the ones I've made so far:
-
-[Finding and Exploiting Reflected XSS](https://youtu.be/V4MATqtdxss)
-
-- - -
-
-## SQLite3 SQL Injection
-
-_Support for this is limited, before raising issues, please ensure you are prepared to work on debugging, do not simply claim "it does not work"._
-
-By default, SQLi and Blind SQLi are done against the MariaDB/MySQL server used by the site but it is possible to switch to do the SQLi testing against SQLite3 instead.
-
-I am not going to cover how to get SQLite3 working with PHP, but it should be a simple case of installing the `php-sqlite3` package and making sure it is enabled.
-
-To make the switch, simply edit the config file and add or edit these lines:
-
-```
-$_DVWA["SQLI_DB"] = "sqlite";
-$_DVWA["SQLITE_DB"] = "sqli.db";
-```
-
-By default it uses the file `database/sqli.db`, if you mess it up, simply copy `database/sqli.db.dist` over the top.
-
-The challenges are exactly the same as for MySQL, they just run against SQLite3 instead.
-
-- - -
-
-👨‍💻 Contributors
------
-
-Thanks for all your contributions and keeping this project updated. :heart:
-
-If you have an idea, some kind of improvement or just simply want to collaborate, you are welcome to contribute and participate in the Project, feel free to send your PR.
-
-<p align="center">
-<a href="https://github.com/digininja/DVWA/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=digininja/DVWA&max=500">
-</a>
-</p>
-
-- - -
-
-## Links
-
-Project Home: <https://github.com/digininja/DVWA>
-
-*Created by the DVWA team*
+![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_400px.png)
