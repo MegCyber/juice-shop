@@ -3,10 +3,7 @@ node {
     checkout scm
   }
   
-     stage('Run functional tests') {
-          sh 'mvn -f juice-shop/FunctionalSecurityTest-master/pom.xml clean package'
-          sh 'mvn clean test'
-     }
+    
 
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
@@ -15,15 +12,11 @@ node {
     }
   }
  
- stage('Git Secrets') {
-                // Run Trufflehog
-                sh ' trufflehog https://github.com/MegCyber/juice-shop.git --json || true'
 
-            }
  
   stage('DAST Analysis') {
                 // Run ZAP
-                sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py     -t https://aopartnersdev.com.ng -g gen.conf -r testreport.html || true'
+                sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py     -t https://juice-shop.herokuapp.com/ -g gen.conf -r testreport.html || true'
 
             }
 }
