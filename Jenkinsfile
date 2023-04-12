@@ -2,6 +2,12 @@ node {
   stage('SCM') { 
     checkout scm
   }
+  
+     stage('Run functional tests') {
+          sh 'mvn -f juice-shop/FunctionalSecurityTest-master/pom.xml clean package'
+          sh 'mvn clean test'
+     }
+
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
