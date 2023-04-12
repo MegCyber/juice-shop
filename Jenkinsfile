@@ -10,6 +10,7 @@ node {
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
     }
+  }
  
   stage('DAST Analysis') {
                 // Run ZAP
