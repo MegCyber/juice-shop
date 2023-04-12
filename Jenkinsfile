@@ -2,6 +2,10 @@ node {
   stage('SCM') { 
     checkout scm
   }
+    stage('Build Juice Shop') {
+    sh 'rm -rf node_modules'
+    sh "npm install"
+  }
   
     
 
