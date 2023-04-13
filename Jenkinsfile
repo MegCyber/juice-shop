@@ -3,6 +3,7 @@ node {
     checkout scm
   }
   
+  
     
 
   stage('SonarQube Analysis') {
@@ -10,6 +11,10 @@ node {
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
     }
+  }
+  stage('Functional Test') { 
+     git 'https://github.com/MegCyber/FunctionalSecurityTest.git'
+    sh 'mvn test'
   }
  
   stage('DAST Analysis') {
