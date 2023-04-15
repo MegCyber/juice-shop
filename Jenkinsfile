@@ -13,8 +13,8 @@ node {
   
   stage('Functional Test') { 
     git 'https://github.com/MegCyber/FunctionalSecurityTest.git'
-    sh 'mvn clean compile'
-    sh 'mvn clean test'
+    //sh 'mvn clean compile'
+    sh 'mvn clean install'
     cucumber buildStatus: 'null', customCssFiles: '', customJsFiles: '', failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
   }
  
